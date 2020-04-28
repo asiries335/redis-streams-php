@@ -3,6 +3,7 @@
 
 namespace Asiries335\redisSteamPhp;
 
+use Asiries335\redisSteamPhp\Commands\Xadd;
 use Predis\ClientInterface;
 use Predis\Command\CommandInterface;
 
@@ -19,22 +20,21 @@ final class Client
     /**
      * Client constructor.
      *
-     * @param ClientInterface $client ClientInterface
+     * @param \Redis $redisClient Redis
      */
-    public function __construct(ClientInterface $client)
+    public function __construct(\Redis $redisClient)
     {
-        $this->client = $client;
+        $this->client = $redisClient;
     }
 
     /**
      * Appends the specified stream entry to the stream at the specified key
      *
-     * @param array $args Args Command
+     * @param string|null $nameStream
      *
-     * @return CommandInterface
      */
-    public function xadd(array $args = [])
+    public function stream(string $nameStream = null)
     {
-        return $this->client->createCommand('xadd', $args);
+        return new Stream($this->client, $nameStream);
     }
 }
