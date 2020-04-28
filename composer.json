@@ -1,0 +1,19 @@
+{
+    "name": "asiries335/redis-stream-php",
+    "description": "Redis stream php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "asiries335",
+            "email": "asiries335@gmail.com"
+        }
+    ],
+    "require": {
+        "predis/predis": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Asiries335\\redisSteamPhp\\": "src/"
+        }
+    }
+}
