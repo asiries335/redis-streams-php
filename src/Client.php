@@ -13,7 +13,7 @@ final class Client
     /**
      * Client.
      *
-     * @var ClientInterface
+     * @var Redis
      */
     public $client;
 

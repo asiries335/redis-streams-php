@@ -9,8 +9,18 @@ use Predis\ClientInterface;
 
 final class Stream
 {
+    /**
+     * Client
+     *
+     * @var Redis
+     */
     private $client;
 
+    /**
+     * Name stream
+     *
+     * @var string
+     */
     private $nameStream;
 
     /**
@@ -26,7 +36,6 @@ final class Stream
     }
 
     /**
-     *
      * Appends the specified stream entry to the stream at the specified key
      *
      * @param string $key
@@ -47,6 +56,29 @@ final class Stream
                 '*',
                 $key,
                 json_encode($values)
+            );
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Get data from stream
+     *
+     * @return array
+     *
+     * @throws \Exception
+     *
+     * @see https://redis.io/commands/xread
+     */
+    public function get() : array
+    {
+        try {
+            return $this->client->rawCommand(
+                'xread',
+                'STREAMS',
+                $this->nameStream,
+                '0'
             );
         } catch (\Exception $exception) {
             throw $exception;
