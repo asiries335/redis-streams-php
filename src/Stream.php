@@ -4,8 +4,9 @@
 namespace Asiries335\redisSteamPhp;
 
 
-use Asiries335\redisSteamPhp\Commands\Xadd;
-use Predis\ClientInterface;
+use Asiries335\redisSteamPhp\Data\Collection;
+use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
+use Redis;
 
 final class Stream
 {
@@ -21,7 +22,7 @@ final class Stream
      *
      * @var string
      */
-    private $nameStream;
+    private $streamName;
 
     /**
      * Stream constructor.
@@ -32,7 +33,7 @@ final class Stream
     public function __construct(\Redis $client, string $nameStream)
     {
         $this->client     = $client;
-        $this->nameStream = $nameStream;
+        $this->streamName = $nameStream;
     }
 
     /**
@@ -52,7 +53,7 @@ final class Stream
         try {
             return (string) $this->client->rawCommand(
                 'xadd',
-                $this->nameStream,
+                $this->streamName,
                 '*',
                 $key,
                 json_encode($values)
@@ -71,18 +72,36 @@ final class Stream
      *
      * @see https://redis.io/commands/xread
      */
-    public function get() : array
+    public function get()
     {
+        $collection = new CollectionHydrator();
+
         try {
-            return $this->client->rawCommand(
+            $items = $this->client->rawCommand(
                 'xread',
                 'STREAMS',
-                $this->nameStream,
+                $this->streamName,
                 '0'
             );
+
+             return $collection->hydrate($items, Collection::class);
+
         } catch (\Exception $exception) {
             throw $exception;
         }
+    }
+
+    public function read()
+    {
+        $i = 0;
+        //while (true) {
+
+            $a = $this->client->rawCommand('XREVRANGE', $this->streamName, '+', '-', 'COUNT', 1);
+
+            var_dump($a);
+
+            //var_dump($i);
+        //}
     }
 
 
