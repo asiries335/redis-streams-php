@@ -18,7 +18,7 @@ final class Client
      *
      * @var Redis
      */
-    public $client;
+    private $_client;
 
     /**
      * Client constructor.
@@ -27,7 +27,7 @@ final class Client
      */
     public function __construct(\Redis $redisClient)
     {
-        $this->client = $redisClient;
+        $this->_client = $redisClient;
     }
 
     /**
@@ -39,6 +39,6 @@ final class Client
      */
     public function stream(string $nameStream)
     {
-        return new Stream($this->client, $nameStream);
+        return new Stream($this->_client, $nameStream);
     }
 }
