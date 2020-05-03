@@ -3,9 +3,6 @@
 
 namespace Asiries335\redisSteamPhp;
 
-use Asiries335\redisSteamPhp\Commands\Xadd;
-use Predis\ClientInterface;
-use Predis\Command\CommandInterface;
 
 final class Client
 {
@@ -30,10 +27,11 @@ final class Client
     /**
      * Appends the specified stream entry to the stream at the specified key
      *
-     * @param string|null $nameStream
+     * @param string $nameStream Name stream
      *
+     * @return mixed
      */
-    public function stream(string $nameStream = null)
+    public function stream(string $nameStream)
     {
         return new Stream($this->client, $nameStream);
     }

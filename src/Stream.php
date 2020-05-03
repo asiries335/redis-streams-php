@@ -5,7 +5,9 @@ namespace Asiries335\redisSteamPhp;
 
 
 use Asiries335\redisSteamPhp\Data\Collection;
+use Asiries335\redisSteamPhp\Data\Message;
 use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
+use Asiries335\redisSteamPhp\Hydrator\MessageHydrator;
 use Redis;
 
 final class Stream
@@ -27,7 +29,7 @@ final class Stream
     /**
      * Stream constructor.
      *
-     * @param Redis  $client     Redis
+     * @param Redis  $client     Redis Client
      * @param string $nameStream Name stream
      */
     public function __construct(\Redis $client, string $nameStream)
@@ -66,16 +68,14 @@ final class Stream
     /**
      * Get data from stream
      *
-     * @return array
+     * @return Collection
      *
      * @throws \Exception
      *
      * @see https://redis.io/commands/xread
      */
-    public function get()
+    public function get() : Collection
     {
-        $collection = new CollectionHydrator();
-
         try {
             $items = $this->client->rawCommand(
                 'xread',
@@ -84,25 +84,56 @@ final class Stream
                 '0'
             );
 
-             return $collection->hydrate($items, Collection::class);
+            $collection = new CollectionHydrator();
+
+            return $collection->hydrate($items, Collection::class);
 
         } catch (\Exception $exception) {
             throw $exception;
         }
     }
 
-    public function read()
+    /**
+     * Listen stream
+     *
+     * @param \Closure $closure User callback
+     *
+     * @return void
+     *
+     * @throws \ErrorException
+     */
+    public function listen(\Closure $closure) : void
     {
-        $i = 0;
-        //while (true) {
+        $messageHydrate = new MessageHydrator();
 
-            $a = $this->client->rawCommand('XREVRANGE', $this->streamName, '+', '-', 'COUNT', 1);
+        $lastMessageId = null;
 
-            var_dump($a);
+        while (true) {
 
-            //var_dump($i);
-        //}
+            $data = $this->client->rawCommand(
+                'XREVRANGE',
+                $this->streamName,
+                '+',
+                '-',
+                'COUNT',
+                1
+            );
+
+            if (empty($data) === true) {
+                usleep(1);
+                continue;
+            }
+
+            $message = $messageHydrate->hydrate($data[0], Message::class);
+
+            if ($message->getId() !== $lastMessageId) {
+                $lastMessageId = $message->getId();
+                $closure->call($this, $message);
+            }
+
+            usleep(1);
+        }
+
     }
-
 
 }
