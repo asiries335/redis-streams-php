@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Asiries335\redisSteamPhp\Hydrator;
 
-use Asiries335\redisSteamPhp\Data\DataInterface;
-use Predis\Response\ResponseInterface;
-
 interface HydratorInterface
 {
     /**

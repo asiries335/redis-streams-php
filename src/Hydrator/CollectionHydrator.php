@@ -6,7 +6,6 @@ namespace Asiries335\redisSteamPhp\Hydrator;
 
 use Asiries335\redisSteamPhp\Data\Collection;
 use Asiries335\redisSteamPhp\Data\DataInterface;
-use Predis\Response\ResponseInterface;
 
 class CollectionHydrator implements HydratorInterface
 {
@@ -15,7 +14,7 @@ class CollectionHydrator implements HydratorInterface
      * Collection hydrate
      *
      * @param array  $data  Data
-     * @param string $class Class
+     * @param string $class Class Collection
      *
      * @return mixed
      * @throws \ErrorException
