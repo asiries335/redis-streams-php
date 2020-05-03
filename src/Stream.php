@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Stream class
+ *
+ * @author Sergei Karii <asiries335@gmail.com>
+ */
 
 namespace Asiries335\redisSteamPhp;
-
 
 use Asiries335\redisSteamPhp\Data\Collection;
 use Asiries335\redisSteamPhp\Data\Message;
@@ -17,14 +23,14 @@ final class Stream
      *
      * @var Redis
      */
-    private $client;
+    private $_client;
 
     /**
      * Name stream
      *
      * @var string
      */
-    private $streamName;
+    private $_streamName;
 
     /**
      * Stream constructor.
@@ -34,15 +40,15 @@ final class Stream
      */
     public function __construct(\Redis $client, string $nameStream)
     {
-        $this->client     = $client;
-        $this->streamName = $nameStream;
+        $this->_client     = $client;
+        $this->_streamName = $nameStream;
     }
 
     /**
      * Appends the specified stream entry to the stream at the specified key
      *
-     * @param string $key
-     * @param array  $values
+     * @param string $key    Key Message
+     * @param array  $values Value Message
      *
      * @return string
      *
@@ -53,9 +59,9 @@ final class Stream
     public function add(string $key, array $values) : string
     {
         try {
-            return (string) $this->client->rawCommand(
+            return (string) $this->_client->rawCommand(
                 'xadd',
-                $this->streamName,
+                $this->_streamName,
                 '*',
                 $key,
                 json_encode($values)
@@ -77,10 +83,10 @@ final class Stream
     public function get() : Collection
     {
         try {
-            $items = $this->client->rawCommand(
+            $items = $this->_client->rawCommand(
                 'xread',
                 'STREAMS',
-                $this->streamName,
+                $this->_streamName,
                 '0'
             );
 
@@ -109,10 +115,9 @@ final class Stream
         $lastMessageId = null;
 
         while (true) {
-
-            $data = $this->client->rawCommand(
+            $data = $this->_client->rawCommand(
                 'XREVRANGE',
-                $this->streamName,
+                $this->_streamName,
                 '+',
                 '-',
                 'COUNT',
@@ -133,7 +138,6 @@ final class Stream
 
             usleep(1);
         }
-
     }
 
 }
