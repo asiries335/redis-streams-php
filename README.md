@@ -60,38 +60,23 @@ $collection = $client->stream('test')->get();
 
 // result.
 
- Asiries335\redisSteamPhp\Data\Collection^ {#6
+ Asiries335\redisSteamPhp\Data\Collection {
   -_name: "test"
-  -_messages:  [
-    0 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1587987159363-0"
-      -_key: "job"
-      -_body: "[ewrwerwerwerwer]"
-    }
-    1 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1587987173272-0"
-      -_key: "job"
-      -_body: "[ewrwerwerwerwer1]"
-    }
-    2 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1587987415226-0"
-      -_key: "job"
-      -_body: "[ewrwerwerwerwer1]"
-    }
-    3 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1588096817666-0"
-      -_key: "3424"
-      -_body: "234"
-    }
-    4 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1588097384009-0"
-      -_key: "213"
-      -_body: "12312"
-    }
-    5 => Asiries335\redisSteamPhp\Data\Message^ {
-      -_id: "1588097564518-0"
+  -_messages: [
+    0 => Asiries335\redisSteamPhp\Data\Message {
+      -_id: "1588098124977-0"
       -_key: "key"
-      -_body: "[1,1,1]"
+      -_body: "{"id":123,"name":"Barney","age":25}"
+    }
+    1 => Asiries335\redisSteamPhp\Data\Message {
+      -_id: "1588098124977-1"
+      -_key: "key"
+      -_body: "{"id":124,"name":"Smith","age":30}"
+    }
+    2 => Asiries335\redisSteamPhp\Data\Message {
+      -_id: "1588500979608-0"
+      -_key: "key"
+      -_body: "{"id":163,"name":"Alex","age":20}"
     }
   ]
 }
