@@ -17,11 +17,15 @@ Work with Redis occurs through the package Predis
 
 Need version Redis >= 5.0
 #
-#### **Examples of using**
 
-**_start working_**
 
-`<?php
+
+
+## Usage
+
+```php
+
+<?php
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -31,4 +35,6 @@ $redisClient = new Redis();
 $redisClient->connect('127.0.0.1', '6379');
 
 
-$client = new \Asiries335\redisSteamPhp\Client($redisClient);`
+$client = new \Asiries335\redisSteamPhp\Client($redisClient);
+
+```
