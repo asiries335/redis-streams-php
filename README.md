@@ -9,20 +9,17 @@ At the moment, the package can work with methods: **xadd**, **xread**, **xrevran
 The package has functions for adding messages to a stream,
 get messages from a stream, 
 listening to a stream as event-loop
-#
-#### **Info**
+
+## Info
 
 Work with Redis occurs through the package Predis
 (https://github.com/nrk/predis)
 
 Need version Redis >= 5.0
-#
-
-
-
 
 ## Usage
 
+start working
 ```php
 
 <?php
@@ -36,5 +33,20 @@ $redisClient->connect('127.0.0.1', '6379');
 
 
 $client = new \Asiries335\redisSteamPhp\Client($redisClient);
-
 ```
+
+Add a message to stream
+
+```php
+
+// return id message for redis
+$client->stream('test')->add(
+    'key',
+    [
+        'id'   => 123,
+        'name' => 'Ivan',
+        'age'  => 25,
+    ]
+);
+```
+
