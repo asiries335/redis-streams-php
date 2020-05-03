@@ -43,7 +43,7 @@ $client->stream('test')->add(
     'key',
     [
         'id'   => 123,
-        'name' => 'Ivan',
+        'name' => 'Barney',
         'age'  => 25,
     ]
 );
