@@ -17,14 +17,16 @@ Work with Redis occurs through the package Predis
 
 Need version Redis >= 5.0
 
+## Install
+
+`composer require asiries335/redis-stream-php`
+
 ## Usage
 
 _Start working_
 ```php
 
 <?php
-
-require __DIR__.'/vendor/autoload.php';
 
 // Class predis.
 $redisClient = new Redis();
