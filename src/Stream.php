@@ -116,7 +116,7 @@ final class Stream
 
         while (true) {
             $data = $this->_client->rawCommand(
-                'XREVRANGE',
+                'xrevrange',
                 $this->_streamName,
                 '+',
                 '-',
