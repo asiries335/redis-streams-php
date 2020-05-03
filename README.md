@@ -19,15 +19,14 @@ Need version Redis >= 5.0
 
 ## Usage
 
-_start working_
+_Start working_
 ```php
 
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
-
-
+// Class predis.
 $redisClient = new Redis();
 $redisClient->connect('127.0.0.1', '6379');
 
@@ -81,6 +80,16 @@ $collection = $client->stream('test')->get();
   ]
 }
 
-
 ```
 
+_Listen to a stream_
+
+```php
+$client->stream('test')->listen(
+    function (\Asiries335\redisSteamPhp\Data\Message $message) {
+        // Your code...
+    }
+);
+```
+
+The method works as event-loop
