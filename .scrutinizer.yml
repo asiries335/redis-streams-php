@@ -8,6 +8,7 @@ build:
 
         override:
           - command: vendor/bin/phpunit
+          - command: vendor/bin/phpunit --coverage-clover=coverage.clover
             coverage:
               file: coverage.clover
 
