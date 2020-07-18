@@ -92,6 +92,10 @@ final class Stream
 
             $collection = new CollectionHydrator();
 
+            if (empty($items) === true) {
+                return new Collection;
+            }
+
             return $collection->hydrate($items, Collection::class);
 
         } catch (\Exception $exception) {
