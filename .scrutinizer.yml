@@ -1,0 +1,25 @@
+build:
+  nodes:
+    analysis:
+      project_setup:
+        override:
+          - 'true'
+      tests:
+
+        override:
+          - command: vendor/bin/phpunit --coverage-clover=coverage.clover
+            coverage:
+              file: coverage.clover
+
+              # These formats are supported:
+              # clover, cobertura, jacoco, python-cc, ruby-cc, go-cc, lcov
+              format: clover
+    tests: true
+checks:
+  php: true
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        concatenation: true
+filter: {  }
