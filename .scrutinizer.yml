@@ -5,8 +5,8 @@ build:
         override:
           - 'true'
       tests:
-
         override:
+          - php-scrutinizer-run
           - command: vendor/bin/phpunit
           - command: vendor/bin/phpunit --coverage-clover=coverage.clover
             coverage:

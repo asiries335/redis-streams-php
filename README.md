@@ -1,7 +1,7 @@
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/?branch=master)
-
+[![Build Status](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/asiries335/redis-streams-php/build-status/master)
 This package is for working with Redis streams for php
 
 #
