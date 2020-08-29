@@ -32,5 +32,12 @@ final class Constants
      *
      * @var float
      */
-    public const TIME_TICK_INTERVAL = 5;
+    public const TIME_TICK_INTERVAL = 1;
+
+    /**
+     * COMMAND XDEL
+     *
+     * @var string
+     */
+    public const COMMAND_XDEL = 'xdel';
 }

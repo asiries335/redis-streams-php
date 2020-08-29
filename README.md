@@ -8,7 +8,7 @@ This package is for working with Redis streams for php
 
 #### **What is implemented in the current version**
 
-At the moment, the package can work with methods: **xadd**, **xread**, **xrevrange**.
+At the moment, the package can work with methods: **xadd**, **xread**, **xrevrange**, **xdel**.
 
 The package has functions for adding messages to a stream,
 get messages from a stream, 
@@ -54,7 +54,13 @@ $client->stream('test')->add(
 );
 ```
 
-see more https://redis.io/commands/xadd
+_Delete a message_
+
+```php
+$client->stream('test')->delete('key');
+```
+
+see more https://redis.io/commands/xdel
 
 _Get a collection of messages from the stream_
 
@@ -98,4 +104,4 @@ $client->stream('test')->listen(
 );
 ```
 
-The method works as event-loop
+functional works on a package basis https://github.com/reactphp/event-loop

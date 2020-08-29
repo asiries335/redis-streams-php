@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Asiries335\redisSteamPhp;
 
-use Asiries335\redisSteamPhp\Actions\ListenAction;
 use Asiries335\redisSteamPhp\Data\Collection;
 use Asiries335\redisSteamPhp\Data\Constants;
 use Asiries335\redisSteamPhp\Data\Message;
@@ -67,6 +66,30 @@ final class Stream
                 '*',
                 $key,
                 json_encode($values)
+            );
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Removes the messages entries from a stream
+     *
+     * @param string $key Key Message
+     *
+     * @return int
+     *
+     * @throws \Exception
+     *
+     * @see https://redis.io/commands/xdel
+     */
+    public function delete(string $key) : int
+    {
+        try {
+            return (int) $this->_client->rawCommand(
+                Constants::COMMAND_XDEL,
+                $this->_streamName,
+                $key
             );
         } catch (\Exception $exception) {
             throw $exception;
@@ -137,6 +160,7 @@ final class Stream
                 foreach ($rows as $row) {
                     $message = $messageHydrate->hydrate($row, Message::class);
                     $closure->call($this, $message);
+                    $this->delete($message->getId());
                 }
             }
         );
