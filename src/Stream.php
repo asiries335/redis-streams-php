@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Asiries335\redisSteamPhp;
 
 use Asiries335\redisSteamPhp\Data\Collection;
+use Asiries335\redisSteamPhp\Data\Constants;
 use Asiries335\redisSteamPhp\Data\Message;
 use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
 use Asiries335\redisSteamPhp\Hydrator\MessageHydrator;
@@ -60,11 +61,35 @@ final class Stream
     {
         try {
             return (string) $this->_client->rawCommand(
-                'xadd',
+                Constants::COMMAND_XADD,
                 $this->_streamName,
                 '*',
                 $key,
                 json_encode($values)
+            );
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Removes the messages entries from a stream
+     *
+     * @param string $key Key Message
+     *
+     * @return int
+     *
+     * @throws \Exception
+     *
+     * @see https://redis.io/commands/xdel
+     */
+    public function delete(string $key) : int
+    {
+        try {
+            return (int) $this->_client->rawCommand(
+                Constants::COMMAND_XDEL,
+                $this->_streamName,
+                $key
             );
         } catch (\Exception $exception) {
             throw $exception;
@@ -84,7 +109,7 @@ final class Stream
     {
         try {
             $items = $this->_client->rawCommand(
-                'xread',
+                Constants::COMMAND_XREAD,
                 'STREAMS',
                 $this->_streamName,
                 '0'
@@ -116,32 +141,31 @@ final class Stream
     {
         $messageHydrate = new MessageHydrator();
 
-        $lastMessageId = null;
+        $loop = \React\EventLoop\Factory::create();
 
-        while (true) {
-            $data = $this->_client->rawCommand(
-                'xrevrange',
-                $this->_streamName,
-                '+',
-                '-',
-                'COUNT',
-                1
-            );
+        $loop->addPeriodicTimer(
+            Constants::TIME_TICK_INTERVAL,
+            function () use ($closure, $messageHydrate, $loop) {
+                $rows = $this->_client->rawCommand(
+                    Constants::COMMAND_XRANGE,
+                    $this->_streamName,
+                    '-',
+                    '+'
+                );
 
-            if (empty($data) === true) {
-                usleep(1);
-                continue;
+                if (empty($rows) === true) {
+                    return;
+                }
+
+                foreach ($rows as $row) {
+                    $message = $messageHydrate->hydrate($row, Message::class);
+                    $closure->call($this, $message);
+                    $this->delete($message->getId());
+                }
             }
+        );
 
-            $message = $messageHydrate->hydrate($data[0], Message::class);
-
-            if ($message->getId() !== $lastMessageId) {
-                $lastMessageId = $message->getId();
-                $closure->call($this, $message);
-            }
-
-            usleep(1);
-        }
+        $loop->run();
     }
 
 }

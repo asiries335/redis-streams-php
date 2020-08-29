@@ -60,9 +60,9 @@ class StreamTest extends TestCase
 
         $this->client->shouldReceive('rawCommand')->andReturn($key);
 
-        $this->stream = new Stream($this->client, self::TEST_NAME_STREAM);
+        $stream = new Stream($this->client, self::TEST_NAME_STREAM);
 
-        $result = $this->stream->add($key, $values);
+        $result = $stream->add($key, $values);
 
         $this->assertEquals($key, $result);
     }
@@ -97,5 +97,33 @@ class StreamTest extends TestCase
 
         $this->assertEquals(Collection::create($data), $collectionStream);
 
+    }
+
+    /**
+     * Delete message
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function testDeleteMessage() : void
+    {
+        $key = 'name';
+
+        $values = [
+            'id'   => 123,
+            'name' => 'Barney',
+            'age'  => 25,
+        ];
+
+        $this->client->shouldReceive('rawCommand')->andReturn($key);
+
+        $stream = new Stream($this->client, self::TEST_NAME_STREAM);
+
+        $stream->add($key, $values);
+
+        $result = $stream->delete($key);
+
+        $this->assertIsInt($result);
     }
 }
