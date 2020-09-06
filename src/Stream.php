@@ -73,6 +73,34 @@ final class Stream
     }
 
     /**
+     * Find a message by id
+     *
+     * @param string $id  Id Message
+     *
+     * @return Message
+     *
+     * @throws \Exception
+     *
+     */
+    public function findById(string $id) : Message
+    {
+        $item = $this->_client->call(
+            Constants::COMMAND_XREAD,
+            'STREAMS',
+            $this->_streamName,
+            $id
+        );
+
+        if (empty($item) === true) {
+            return new Message;
+        }
+
+        $message = new MessageHydrator();
+
+        return $message->hydrate($item[0][1][0], Message::class);
+    }
+
+    /**
      * Removes the messages entries from a stream
      *
      * @param string $key Key Message

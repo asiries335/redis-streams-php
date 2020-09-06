@@ -16,9 +16,6 @@ listening to a stream as event-loop
 
 ## Info
 
-Work with Redis occurs through the package Predis
-(https://github.com/nrk/predis)
-
 Need version Redis >= 5.0
 
 ## Install
@@ -71,6 +68,21 @@ $client->stream('test')->add(
         'age'  => 25,
     ]
 );
+```
+
+_Find a message by id_
+
+```php
+
+$message = $client->stream('test')->findById('1599404282894-0');
+
+// result.
+Asiries335\redisSteamPhp\Data\Message {
+  -_id: "1599404282894-0"
+  -_key: "user"
+  -_body: "{"id":123,"name":"Barney","age":25}"
+}
+
 ```
 
 _Delete a message_
