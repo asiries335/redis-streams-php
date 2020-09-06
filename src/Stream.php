@@ -15,14 +15,14 @@ use Asiries335\redisSteamPhp\Data\Constants;
 use Asiries335\redisSteamPhp\Data\Message;
 use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
 use Asiries335\redisSteamPhp\Hydrator\MessageHydrator;
-use Redis;
+
 
 final class Stream
 {
     /**
      * Client
      *
-     * @var Redis
+     * @var ClientRedisStreamPhpInterface
      */
     private $_client;
 
@@ -36,10 +36,10 @@ final class Stream
     /**
      * Stream constructor.
      *
-     * @param Redis  $client     Redis Client
-     * @param string $nameStream Name stream
+     * @param ClientRedisStreamPhpInterface $client     ClientRedisInterface
+     * @param string                        $nameStream Name stream
      */
-    public function __construct(\Redis $client, string $nameStream)
+    public function __construct(ClientRedisStreamPhpInterface $client, string $nameStream)
     {
         $this->_client     = $client;
         $this->_streamName = $nameStream;
@@ -60,7 +60,7 @@ final class Stream
     public function add(string $key, array $values) : string
     {
         try {
-            return (string) $this->_client->rawCommand(
+            return (string) $this->_client->call(
                 Constants::COMMAND_XADD,
                 $this->_streamName,
                 '*',
@@ -86,7 +86,7 @@ final class Stream
     public function delete(string $key) : int
     {
         try {
-            return (int) $this->_client->rawCommand(
+            return (int) $this->_client->call(
                 Constants::COMMAND_XDEL,
                 $this->_streamName,
                 $key
@@ -108,7 +108,7 @@ final class Stream
     public function get() : Collection
     {
         try {
-            $items = $this->_client->rawCommand(
+            $items = $this->_client->call(
                 Constants::COMMAND_XREAD,
                 'STREAMS',
                 $this->_streamName,
@@ -146,7 +146,7 @@ final class Stream
         $loop->addPeriodicTimer(
             Constants::TIME_TICK_INTERVAL,
             function () use ($closure, $messageHydrate, $loop) {
-                $rows = $this->_client->rawCommand(
+                $rows = $this->_client->call(
                     Constants::COMMAND_XRANGE,
                     $this->_streamName,
                     '-',
