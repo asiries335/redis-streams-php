@@ -16,9 +16,6 @@ listening to a stream as event-loop
 
 ## Info
 
-Work with Redis occurs through the package Predis
-(https://github.com/nrk/predis)
-
 Need version Redis >= 5.0
 
 ## Install
