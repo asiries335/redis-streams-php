@@ -73,6 +73,21 @@ $client->stream('test')->add(
 );
 ```
 
+_Find a message by id_
+
+```php
+
+$message = $client->stream('test')->findById('1599404282894-0');
+
+// result.
+Asiries335\redisSteamPhp\Data\Message {
+  -_id: "1599404282894-0"
+  -_key: "user"
+  -_body: "{"id":123,"name":"Barney","age":25}"
+}
+
+```
+
 _Delete a message_
 
 ```php
