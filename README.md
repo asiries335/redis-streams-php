@@ -32,12 +32,31 @@ _Start working_
 
 <?php
 
-// Class predis.
-$redisClient = new Redis();
-$redisClient->connect('127.0.0.1', '6379');
+class Config implements \Asiries335\redisSteamPhp\ClientRedisStreamPhpInterface {
 
+    private $client;
 
-$client = new \Asiries335\redisSteamPhp\Client($redisClient);
+    public function __construct()
+    {
+        $this->client = new \Redis();
+        $this->client->connect('127.0.0.1', '6379');
+    }
+
+    /**
+     * Method for run command of redis
+     *
+     * @param string $command
+     * @param mixed ...$args
+     * 
+     * @return mixed
+     */
+    public function call(string $command, ...$args)
+    {
+        return $this->client->rawCommand($command, ...$args);
+    }
+}
+
+$client = new \Asiries335\redisSteamPhp\Client(new Config());
 ```
 
 _Add a message to stream_

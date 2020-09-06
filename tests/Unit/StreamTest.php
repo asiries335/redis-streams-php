@@ -3,6 +3,7 @@
 
 namespace Asiries335\redisSteamPhp\Tests;
 
+use Asiries335\redisSteamPhp\ClientRedisStreamPhpInterface;
 use Asiries335\redisSteamPhp\Data\Collection;
 use Asiries335\redisSteamPhp\Stream;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,7 @@ class StreamTest extends TestCase
      */
     public function setUp() : void
     {
-        $this->client = \Mockery::mock(\Redis::class);
+        $this->client = \Mockery::mock(ClientRedisStreamPhpInterface::class);
     }
 
     /**
@@ -32,7 +33,7 @@ class StreamTest extends TestCase
      */
     public function testReadEmptyStream() : void
     {
-        $this->client->shouldReceive('rawCommand')->andReturn([]);
+        $this->client->shouldReceive('call')->andReturn([]);
 
         $stream = new Stream($this->client, self::TEST_NAME_STREAM);
 
@@ -58,7 +59,7 @@ class StreamTest extends TestCase
             'age'  => 25,
         ];
 
-        $this->client->shouldReceive('rawCommand')->andReturn($key);
+        $this->client->shouldReceive('call')->andReturn($key);
 
         $stream = new Stream($this->client, self::TEST_NAME_STREAM);
 
@@ -89,7 +90,7 @@ class StreamTest extends TestCase
             ]
         ];
 
-        $this->client->shouldReceive('rawCommand')->andReturn($data);
+        $this->client->shouldReceive('call')->andReturn($data);
 
         $stream = new Stream($this->client, self::TEST_NAME_STREAM);
 
@@ -116,7 +117,7 @@ class StreamTest extends TestCase
             'age'  => 25,
         ];
 
-        $this->client->shouldReceive('rawCommand')->andReturn($key);
+        $this->client->shouldReceive('call')->andReturn($key);
 
         $stream = new Stream($this->client, self::TEST_NAME_STREAM);
 

@@ -14,18 +14,18 @@ final class Client
 {
 
     /**
-     * Client.
+     * Client Redis Interface.
      *
-     * @var Redis
+     * @var ClientRedisStreamPhpInterface
      */
     private $_client;
 
     /**
      * Client constructor.
      *
-     * @param \Redis $redisClient Redis
+     * @param ClientRedisStreamPhpInterface $redisClient Client redis interface
      */
-    public function __construct(\Redis $redisClient)
+    public function __construct(ClientRedisStreamPhpInterface $redisClient)
     {
         $this->_client = $redisClient;
     }
