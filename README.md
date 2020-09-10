@@ -28,7 +28,9 @@ _Start working_
 ```php
 
 <?php
+use Asiries335\redisSteamPhp\Dto\StreamCommandCallTransporter;
 
+// Example use in your app.
 class Config implements \Asiries335\redisSteamPhp\ClientRedisStreamPhpInterface {
 
     private $client;
@@ -42,14 +44,20 @@ class Config implements \Asiries335\redisSteamPhp\ClientRedisStreamPhpInterface 
     /**
      * Method for run command of redis
      *
-     * @param string $command
-     * @param mixed ...$args
-     * 
+     * @param StreamCommandCallTransporter $commandCallTransporter
+     *
      * @return mixed
+     *
+     * @throws \Dto\Exceptions\InvalidDataTypeException
+     * @throws \Dto\Exceptions\InvalidKeyException
      */
-    public function call(string $command, ...$args)
+    public function call(StreamCommandCallTransporter $commandCallTransporter)
     {
-        return $this->client->rawCommand($command, ...$args);
+        // Example use.
+        return $this->client->rawCommand(
+            $commandCallTransporter->get('command')->toScalar(),
+            ...$commandCallTransporter->get('args')->toArray()
+        );
     }
 }
 
