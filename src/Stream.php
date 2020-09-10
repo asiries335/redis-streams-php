@@ -13,6 +13,7 @@ namespace Asiries335\redisSteamPhp;
 use Asiries335\redisSteamPhp\Data\Collection;
 use Asiries335\redisSteamPhp\Data\Constants;
 use Asiries335\redisSteamPhp\Data\Message;
+use Asiries335\redisSteamPhp\Dto\StreamCommandCallTransporter;
 use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
 use Asiries335\redisSteamPhp\Hydrator\MessageHydrator;
 
@@ -59,14 +60,20 @@ final class Stream
      */
     public function add(string $key, array $values) : string
     {
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XADD,
+                'args'    => [
+                    $this->_streamName,
+                    '*',
+                    $key,
+                    json_encode($values)
+                ]
+            ]
+        );
+
         try {
-            return (string) $this->_client->call(
-                Constants::COMMAND_XADD,
-                $this->_streamName,
-                '*',
-                $key,
-                json_encode($values)
-            );
+            return (string) $this->_client->call($transporter);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -75,21 +82,26 @@ final class Stream
     /**
      * Find a message by id
      *
-     * @param string $id  Id Message
+     * @param string $id Id Message
      *
      * @return Message
      *
      * @throws \Exception
-     *
      */
     public function findById(string $id) : Message
     {
-        $item = $this->_client->call(
-            Constants::COMMAND_XREAD,
-            'STREAMS',
-            $this->_streamName,
-            $id
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XREAD,
+                'args'    => [
+                    'STREAMS',
+                    $this->_streamName,
+                    $id
+                ]
+            ]
         );
+
+        $item = $this->_client->call($transporter);
 
         if (empty($item) === true) {
             return new Message;
@@ -113,12 +125,18 @@ final class Stream
      */
     public function delete(string $key) : int
     {
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XDEL,
+                'args'    => [
+                    $this->_streamName,
+                    $key
+                ]
+            ]
+        );
+
         try {
-            return (int) $this->_client->call(
-                Constants::COMMAND_XDEL,
-                $this->_streamName,
-                $key
-            );
+            return (int) $this->_client->call($transporter);
         } catch (\Exception $exception) {
             throw $exception;
         }
@@ -135,13 +153,19 @@ final class Stream
      */
     public function get() : Collection
     {
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XREAD,
+                'args'    => [
+                    'STREAMS',
+                    $this->_streamName,
+                    '0'
+                ]
+            ]
+        );
+
         try {
-            $items = $this->_client->call(
-                Constants::COMMAND_XREAD,
-                'STREAMS',
-                $this->_streamName,
-                '0'
-            );
+            $items = $this->_client->call($transporter);
 
             $collection = new CollectionHydrator();
 
@@ -163,7 +187,6 @@ final class Stream
      *
      * @return void
      *
-     * @throws \ErrorException
      */
     public function listen(\Closure $closure) : void
     {
@@ -174,12 +197,18 @@ final class Stream
         $loop->addPeriodicTimer(
             Constants::TIME_TICK_INTERVAL,
             function () use ($closure, $messageHydrate, $loop) {
-                $rows = $this->_client->call(
-                    Constants::COMMAND_XRANGE,
-                    $this->_streamName,
-                    '-',
-                    '+'
+                $transporter = new StreamCommandCallTransporter(
+                    [
+                        'command' => Constants::COMMAND_XRANGE,
+                        'args'    => [
+                            $this->_streamName,
+                            '-',
+                            '+'
+                        ]
+                    ]
                 );
+
+                $rows = $this->_client->call($transporter);
 
                 if (empty($rows) === true) {
                     return;

@@ -10,7 +10,8 @@
     ],
     "require": {
         "predis/predis": "^1.1",
-        "react/event-loop": "^1.1.1"
+        "react/event-loop": "^1.1.1",
+        "dto/dto": "^3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5",
