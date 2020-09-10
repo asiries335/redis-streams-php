@@ -3,15 +3,16 @@
 
 namespace Asiries335\redisSteamPhp;
 
+use Asiries335\redisSteamPhp\Dto\StreamCommandCallTransporter;
+
 interface ClientRedisStreamPhpInterface
 {
     /**
      * Call
      *
-     * @param string $command
-     * @param mixed ...$args
+     * @param StreamCommandCallTransporter $streamCommandCallTransporter
      *
      * @return mixed
      */
-    public function call(string $command, ...$args);
+    public function call(StreamCommandCallTransporter $streamCommandCallTransporter);
 }
