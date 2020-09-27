@@ -109,7 +109,7 @@ final class Stream
 
         $message = new MessageHydrator();
 
-        return $message->hydrate($item[0][1][0], Message::class);
+        return $message->hydrate($item[0][1][0] ?? [], Message::class);
     }
 
     /**
