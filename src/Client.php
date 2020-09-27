@@ -33,12 +33,24 @@ final class Client
     /**
      * Work with stream
      *
-     * @param string $nameStream Name stream
+     * @param string $streamName Name stream
      *
      * @return mixed
      */
-    public function stream(string $nameStream)
+    public function stream(string $streamName)
     {
-        return new Stream($this->_client, $nameStream);
+        return new Stream($this->_client, $streamName);
+    }
+
+    /**
+     * Work with stream group
+     *
+     * @param string $streamName Name stream
+     *
+     * @return mixed
+     */
+    public function streamGroup(string $streamName)
+    {
+        return new StreamGroup($this->_client, $streamName);
     }
 }
