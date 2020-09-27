@@ -5,6 +5,7 @@ namespace Asiries335\redisSteamPhp\Tests;
 
 use Asiries335\redisSteamPhp\ClientRedisStreamPhpInterface;
 use Asiries335\redisSteamPhp\Data\Collection;
+use Asiries335\redisSteamPhp\Data\Message;
 use Asiries335\redisSteamPhp\Stream;
 use PHPUnit\Framework\TestCase;
 
@@ -126,5 +127,26 @@ class StreamTest extends TestCase
         $result = $stream->delete($key);
 
         $this->assertIsInt($result);
+    }
+
+    /**
+     * Find by id message
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function testFindById() : void
+    {
+        $key = '1c-234234f3w';
+
+        // Empty.
+        $this->client->shouldReceive('call')->andReturn([]);
+
+        $stream = new Stream($this->client, self::TEST_NAME_STREAM);
+
+        $message = $stream->findById($key);
+
+        $this->assertEquals(new Message(), $message);
     }
 }
