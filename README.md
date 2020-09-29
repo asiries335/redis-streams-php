@@ -156,3 +156,13 @@ $isShowFullHistoryStream = false;
 // return bool or ErrorException.
 $client->streamGroupConsumer($streamName)->create($groupName, $isShowFullHistoryStream);
 ```
+
+_Destroy a consumer group_
+
+```php
+$streamName = 'test';
+$groupName  = 'demo-group-1';
+
+// return bool or ErrorException.
+$client->streamGroupConsumer($streamName)->destroy($groupName);
+```

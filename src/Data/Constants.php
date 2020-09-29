@@ -35,6 +35,20 @@ final class Constants
     public const COMMAND_XRANGE = 'xrange';
 
     /**
+     * COMMAND OPTION CREATE
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_CREATE = 'CREATE';
+
+    /**
+     * COMMAND OPTION DESTROY
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_DESTROY = 'DESTROY';
+
+    /**
      * TIME TICK INTERVAL
      *
      * @var float

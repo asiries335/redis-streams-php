@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace Asiries335\redisSteamPhp;
 
@@ -25,10 +25,39 @@ final class StreamGroupConsumer extends RedisStream
             [
                 'command' => Constants::COMMAND_XGROUP,
                 'args'    => [
-                    'CREATE',
+                    Constants::COMMAND_OPTION_XGROUP_CREATE,
                     $this->_streamName,
                     $groupName,
                     (int) $isShowFullHistoryStream
+                ]
+            ]
+        );
+
+        try {
+            return (bool) $this->_client->call($transporter);
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * Delete group Consumer
+     *
+     * @param string $groupName
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    public function destroy(string $groupName) : bool
+    {
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XGROUP,
+                'args'    => [
+                    Constants::COMMAND_OPTION_XGROUP_DESTROY,
+                    $this->_streamName,
+                    $groupName,
                 ]
             ]
         );
