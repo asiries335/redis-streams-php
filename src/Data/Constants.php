@@ -21,11 +21,39 @@ final class Constants
     public const COMMAND_XREAD = 'xread';
 
     /**
+     * COMMAND XGROUP
+     *
+     * @var string
+     */
+    public const COMMAND_XGROUP = 'xgroup';
+
+    /**
      * COMMAND XRANGE
      *
      * @var string
      */
     public const COMMAND_XRANGE = 'xrange';
+
+    /**
+     * COMMAND OPTION CREATE
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_CREATE = 'CREATE';
+
+    /**
+     * COMMAND OPTION DESTROY
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_DESTROY = 'DESTROY';
+
+    /**
+     * COMMAND OPTION DELCONSUMER
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_DELCONSUMER = 'DELCONSUMER';
 
     /**
      * TIME TICK INTERVAL
