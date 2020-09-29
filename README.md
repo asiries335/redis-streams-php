@@ -134,6 +134,7 @@ $collection = $client->stream('test')->get();
 ```
 
 _Listen to a stream_
+
 functional works on a package basis https://github.com/reactphp/event-loop
 
 ```php
