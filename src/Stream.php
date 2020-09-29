@@ -18,34 +18,8 @@ use Asiries335\redisSteamPhp\Hydrator\CollectionHydrator;
 use Asiries335\redisSteamPhp\Hydrator\MessageHydrator;
 
 
-final class Stream
+final class Stream extends RedisStream
 {
-    /**
-     * Client
-     *
-     * @var ClientRedisStreamPhpInterface
-     */
-    private $_client;
-
-    /**
-     * Name stream
-     *
-     * @var string
-     */
-    private $_streamName;
-
-    /**
-     * Stream constructor.
-     *
-     * @param ClientRedisStreamPhpInterface $client     ClientRedisInterface
-     * @param string                        $nameStream Name stream
-     */
-    public function __construct(ClientRedisStreamPhpInterface $client, string $nameStream)
-    {
-        $this->_client     = $client;
-        $this->_streamName = $nameStream;
-    }
-
     /**
      * Appends the specified stream entry to the stream at the specified key
      *

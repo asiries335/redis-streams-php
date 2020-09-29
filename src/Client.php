@@ -35,9 +35,9 @@ final class Client
      *
      * @param string $streamName Name stream
      *
-     * @return mixed
+     * @return Stream
      */
-    public function stream(string $streamName)
+    public function stream(string $streamName) : Stream
     {
         return new Stream($this->_client, $streamName);
     }
