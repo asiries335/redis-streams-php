@@ -68,4 +68,35 @@ final class StreamGroupConsumer extends RedisStream
             throw $exception;
         }
     }
+
+    /**
+     * Delete consumer from group
+     *
+     * @param string $groupName
+     * @param string $consumerName
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    public function deleteConsumer(string $groupName, string $consumerName) : bool
+    {
+        $transporter = new StreamCommandCallTransporter(
+            [
+                'command' => Constants::COMMAND_XGROUP,
+                'args'    => [
+                    Constants::COMMAND_OPTION_XGROUP_DELCONSUMER,
+                    $this->_streamName,
+                    $groupName,
+                    $consumerName
+                ]
+            ]
+        );
+
+        try {
+            return (bool) $this->_client->call($transporter);
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
 }

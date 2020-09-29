@@ -166,3 +166,13 @@ $groupName  = 'demo-group-1';
 // return bool or ErrorException.
 $client->streamGroupConsumer($streamName)->destroy($groupName);
 ```
+
+_Delete a consumer from group_
+```php
+$streamName = 'test';
+$groupName  = 'demo-group-1';
+$consumerName = 'consumer-name';
+
+// return bool or ErrorException.
+$client->streamGroupConsumer($streamName)->deleteConsumer($groupName, $consumerName);
+```

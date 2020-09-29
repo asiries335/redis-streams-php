@@ -49,6 +49,13 @@ final class Constants
     public const COMMAND_OPTION_XGROUP_DESTROY = 'DESTROY';
 
     /**
+     * COMMAND OPTION DELCONSUMER
+     *
+     * @var string
+     */
+    public const COMMAND_OPTION_XGROUP_DELCONSUMER = 'DELCONSUMER';
+
+    /**
      * TIME TICK INTERVAL
      *
      * @var float
