@@ -47,10 +47,10 @@ final class Client
      *
      * @param string $streamName Name stream
      *
-     * @return mixed
+     * @return StreamGroupConsumer
      */
-    public function streamGroup(string $streamName)
+    public function streamGroupConsumer(string $streamName) : StreamGroupConsumer
     {
-        return new StreamGroup($this->_client, $streamName);
+        return new StreamGroupConsumer($this->_client, $streamName);
     }
 }

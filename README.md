@@ -134,6 +134,7 @@ $collection = $client->stream('test')->get();
 ```
 
 _Listen to a stream_
+functional works on a package basis https://github.com/reactphp/event-loop
 
 ```php
 $client->stream('test')->listen(
@@ -143,4 +144,14 @@ $client->stream('test')->listen(
 );
 ```
 
-functional works on a package basis https://github.com/reactphp/event-loop
+
+_Create a new consumer group_
+
+```php
+$streamName = 'test';
+$groupName  = 'demo-group-1';
+$isShowFullHistoryStream = false;
+
+// return bool or ErrorException.
+$client->streamGroupConsumer($streamName)->create($groupName, $isShowFullHistoryStream);
+```

@@ -21,6 +21,13 @@ final class Constants
     public const COMMAND_XREAD = 'xread';
 
     /**
+     * COMMAND XGROUP
+     *
+     * @var string
+     */
+    public const COMMAND_XGROUP = 'xgroup';
+
+    /**
      * COMMAND XRANGE
      *
      * @var string
