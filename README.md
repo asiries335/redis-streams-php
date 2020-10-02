@@ -8,11 +8,15 @@ This package is for working with Redis streams for php
 
 #### **What is implemented in the current version**
 
-At the moment, the package can work with methods: **xadd**, **xread**, **xrevrange**, **xdel**.
+## Features
 
-The package has functions for adding messages to a stream,
-get messages from a stream, 
-listening to a stream as event-loop
+1. add messages in a stream
+2. delete messages from a stream
+3. find a message by the id of the message from a stream
+4. get a collection of a message from a stream
+5. create a group consumer for stream
+6. delete a group consumer from stream
+7. delete a consumer from a group 
 
 ## Info
 
@@ -167,7 +171,7 @@ $groupName  = 'demo-group-1';
 $client->streamGroupConsumer($streamName)->destroy($groupName);
 ```
 
-_Delete a consumer from group_
+_Delete a consumer from a group_
 ```php
 $streamName = 'test';
 $groupName  = 'demo-group-1';
