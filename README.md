@@ -6,8 +6,6 @@
 #
 This package is for working with Redis streams for php
 
-#### **What is implemented in the current version**
-
 ## Features
 
 1. add messages in a stream
