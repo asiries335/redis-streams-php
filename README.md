@@ -17,6 +17,7 @@ This package is for working with Redis streams for php
 5. create a group consumer for stream
 6. delete a group consumer from stream
 7. delete a consumer from a group 
+8. listen to a stream, implemented based on (https://github.com/reactphp/event-loop)
 
 ## Info
 
