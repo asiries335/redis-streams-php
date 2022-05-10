@@ -2,17 +2,17 @@
 
 namespace Asiries335\redisSteamPhp\Listeners\Manager;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerContract;
+use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
 
 class TcpListenerEventManager implements ListenerEventManagerInterface
 {
     /**
-     * @var ListenerContract[]
+     * @var ListenerInterface[]
      */
     private array $listeners;
 
     /**
-     * @param ListenerContract[] $listeners
+     * @param ListenerInterface[] $listeners
      * @return void
      */
     public function setListeners(array $listeners): void {
@@ -27,5 +27,12 @@ class TcpListenerEventManager implements ListenerEventManagerInterface
         foreach ($this->listeners as $listener) {
             $listener->handle($payload);
         }
+    }
+
+    /**
+     * @return ListenerInterface[]
+     */
+    public function list(): array {
+        return $this->listeners;
     }
 }

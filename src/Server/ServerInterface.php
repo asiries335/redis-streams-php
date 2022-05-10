@@ -2,15 +2,16 @@
 
 namespace Asiries335\redisSteamPhp\Server;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerContract;
+use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
 
 interface ServerInterface
 {
+
     /**
-     * @param string $type (tcp, udp or etc)
+     * @param ListenerInterface[] $listeners
      * @return void
      */
-    public function setType(string $type): void;
+    public function setListeners(array $listeners): void;
 
     /**
      * @param array $config

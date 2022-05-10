@@ -7,12 +7,9 @@ use Asiries335\redisSteamPhp\Server\ServerInterface;
 
 class ServerProvider
 {
-    /**
-     * @var ServerInterface
-     */
+
     private ServerInterface $server;
     private ListenerEventManagerInterface $listenerEventManager;
-
 
     /**
      * @param ServerInterface $server
@@ -25,10 +22,9 @@ class ServerProvider
         $this->listenerEventManager = $listenerEventManager;
     }
 
-    public function boot(): void
-    {
+    public function boot(): void {
+        $this->server->setListeners($this->listenerEventManager->list());
         $this->server->start();
-
     }
 
 

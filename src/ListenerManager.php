@@ -2,12 +2,12 @@
 
 namespace Asiries335\redisSteamPhp;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerContract;
+use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
 
 class ListenerManager
 {
     /**
-     * @var ListenerContract[]
+     * @var ListenerInterface[]
      */
     private array $listeners;
 
@@ -19,7 +19,7 @@ class ListenerManager
     }
 
     /**
-     * @param ListenerContract[] $listeners
+     * @param ListenerInterface[] $listeners
      */
     public function setListeners(array $listeners): void {
         $this->listeners = $listeners;

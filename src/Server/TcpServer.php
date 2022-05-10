@@ -2,37 +2,73 @@
 
 namespace Asiries335\redisSteamPhp\Server;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerContract;
+use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
+use React\Socket\ConnectionInterface;
 
+/**
+ *
+ */
 class TcpServer implements ServerInterface
 {
+
+    private array $config;
+
     /**
-     * @param string $type
-     * @return void
+     * @var \React\Socket\ServerInterface
      */
-    public function setType(string $type): void {
-        // TODO: Implement setType() method.
-    }
+    private $tcpServer = null;
+
+
+    /**
+     * @var ListenerInterface[]
+     */
+    private array $listeners;
 
     /**
      * @param array $config
      * @return void
      */
     public function setConfig(array $config): void {
-        // TODO: Implement setConfig() method.
+        $this->config = $config;
     }
 
     /**
      * @return void
      */
     public function start(): void {
-        // TODO: Implement start() method.
+        if ($this->tcpServer !== null) {
+            return;
+        }
+
+        $ip = $this->config['ip'] ?? '0.0.0.0';
+        $port = $this->config['port'] ?? '2341';
+
+        $this->tcpServer = new \React\Socket\TcpServer($ip . ':' . $port);
+
+        $this->tcpServer->on('connection', function (ConnectionInterface $connection) {
+
+            $connection->pipe($connection);
+
+            $connection->on('data', function ($payload) {
+                foreach ($this->listeners as $listener) {
+                    $listener->handle($payload);
+                }
+            });
+        });
     }
 
     /**
      * @return void
      */
     public function down(): void {
-        // TODO: Implement down() method.
+        $this->tcpServer->close();
+    }
+
+    /**
+     * @param array $listeners
+     * @return void
+     */
+    public function setListeners(array $listeners): void {
+        $this->listeners = $listeners;
     }
 }

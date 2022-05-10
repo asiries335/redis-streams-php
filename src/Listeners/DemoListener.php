@@ -2,7 +2,7 @@
 
 namespace Asiries335\redisSteamPhp\Listeners;
 
-class DemoListener implements ListenerContract
+class DemoListener implements ListenerInterface
 {
 
     public function handle($payload) {

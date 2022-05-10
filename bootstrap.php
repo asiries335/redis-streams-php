@@ -9,7 +9,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // set server
 $tcpServer = new TcpServer();
-$tcpServer->setType('tcp');
 $tcpServer->setConfig([
     'host' => '0.0.0.0',
     'port' => '1236'
