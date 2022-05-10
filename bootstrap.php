@@ -1,7 +1,7 @@
 <?php
 
-use Asiries335\redisSteamPhp\Listeners\DemoListener;
-use Asiries335\redisSteamPhp\Listeners\Manager\TcpListenerEventManager;
+use Asiries335\redisSteamPhp\Consumer\DemoConsumer;
+use Asiries335\redisSteamPhp\Consumer\Manager\TcpConsumerManager;
 use Asiries335\redisSteamPhp\Server\TcpServer;
 use Asiries335\redisSteamPhp\ServerProvider;
 
@@ -15,15 +15,15 @@ $tcpServer->setConfig([
 ]);
 
 // set listener manager
-$tcpListenerEventManager = new TcpListenerEventManager();
-$tcpListenerEventManager->setListeners([
-    new DemoListener()
+$tcpConsumerManager = new TcpConsumerManager();
+$tcpConsumerManager->setConsumers([
+    new DemoConsumer()
 ]);
 
 // run
 $serverProvider = new ServerProvider(
     $tcpServer,
-    $tcpListenerEventManager
+    $tcpConsumerManager
 );
 
 $serverProvider->boot();

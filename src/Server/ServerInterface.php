@@ -2,13 +2,13 @@
 
 namespace Asiries335\redisSteamPhp\Server;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
+use Asiries335\redisSteamPhp\Consumer\ConsumerInterface;
 
 interface ServerInterface
 {
 
     /**
-     * @param ListenerInterface[] $listeners
+     * @param ConsumerInterface[] $listeners
      * @return void
      */
     public function setListeners(array $listeners): void;

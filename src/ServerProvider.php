@@ -2,22 +2,22 @@
 
 namespace Asiries335\redisSteamPhp;
 
-use Asiries335\redisSteamPhp\Listeners\Manager\ListenerEventManagerInterface;
+use Asiries335\redisSteamPhp\Consumer\Manager\ConsumerManagerInterface;
 use Asiries335\redisSteamPhp\Server\ServerInterface;
 
 class ServerProvider
 {
 
     private ServerInterface $server;
-    private ListenerEventManagerInterface $listenerEventManager;
+    private ConsumerManagerInterface $listenerEventManager;
 
     /**
      * @param ServerInterface $server
-     * @param ListenerEventManagerInterface $listenerEventManager
+     * @param ConsumerManagerInterface $listenerEventManager
      *
      * @return void
      */
-    public function __construct(ServerInterface $server, ListenerEventManagerInterface $listenerEventManager) {
+    public function __construct(ServerInterface $server, ConsumerManagerInterface $listenerEventManager) {
         $this->server = $server;
         $this->listenerEventManager = $listenerEventManager;
     }

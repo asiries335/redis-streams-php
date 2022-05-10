@@ -2,7 +2,7 @@
 
 namespace Asiries335\redisSteamPhp\Server;
 
-use Asiries335\redisSteamPhp\Listeners\ListenerInterface;
+use Asiries335\redisSteamPhp\Consumer\ConsumerInterface;
 use React\Socket\ConnectionInterface;
 
 /**
@@ -20,7 +20,7 @@ class TcpServer implements ServerInterface
 
 
     /**
-     * @var ListenerInterface[]
+     * @var ConsumerInterface[]
      */
     private array $listeners;
 
