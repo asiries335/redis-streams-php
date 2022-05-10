@@ -22,7 +22,7 @@ class TcpServer implements ServerInterface
     /**
      * @var ConsumerInterface[]
      */
-    private array $listeners;
+    private array $consumers;
 
     /**
      * @param array $config
@@ -50,8 +50,8 @@ class TcpServer implements ServerInterface
             $connection->pipe($connection);
 
             $connection->on('data', function ($payload) {
-                foreach ($this->listeners as $listener) {
-                    $listener->handle($payload);
+                foreach ($this->consumers as $consumer) {
+                    $consumer->handle($payload);
                 }
             });
         });
@@ -65,10 +65,10 @@ class TcpServer implements ServerInterface
     }
 
     /**
-     * @param array $listeners
+     * @param ConnectionInterface[] $consumers
      * @return void
      */
-    public function setListeners(array $listeners): void {
-        $this->listeners = $listeners;
+    public function setConsumers(array $consumers): void {
+        $this->consumers = $consumers;
     }
 }

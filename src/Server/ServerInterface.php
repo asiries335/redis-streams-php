@@ -8,10 +8,10 @@ interface ServerInterface
 {
 
     /**
-     * @param ConsumerInterface[] $listeners
+     * @param ConsumerInterface[] $consumers
      * @return void
      */
-    public function setListeners(array $listeners): void;
+    public function setConsumers(array $consumers): void;
 
     /**
      * @param array $config

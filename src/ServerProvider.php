@@ -7,23 +7,22 @@ use Asiries335\redisSteamPhp\Server\ServerInterface;
 
 class ServerProvider
 {
-
     private ServerInterface $server;
-    private ConsumerManagerInterface $listenerEventManager;
+    private ConsumerManagerInterface $consumerManager;
 
     /**
      * @param ServerInterface $server
-     * @param ConsumerManagerInterface $listenerEventManager
+     * @param ConsumerManagerInterface $consumerManager
      *
      * @return void
      */
-    public function __construct(ServerInterface $server, ConsumerManagerInterface $listenerEventManager) {
+    public function __construct(ServerInterface $server, ConsumerManagerInterface $consumerManager) {
         $this->server = $server;
-        $this->listenerEventManager = $listenerEventManager;
+        $this->consumerManager = $consumerManager;
     }
 
     public function boot(): void {
-        $this->server->setListeners($this->listenerEventManager->list());
+        $this->server->setConsumers($this->consumerManager->list());
         $this->server->start();
     }
 
